@@ -1,4 +1,4 @@
-# Basic Sample Business Network
+# My Commodity Trading network
 
 > This is the "Hello World" of Hyperledger Composer samples, which demonstrates the core functionality of Hyperledger Composer by changing the value of an asset.
 
