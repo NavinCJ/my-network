@@ -31,7 +31,7 @@ Feature: Sample
             | 1             | One         | London       | 1          | alice@email.com |
             | 2             | Two         | Paris        | 2          | bob@email.com   |
     Scenario: Bob can read all of the assets
-        When I use the identity bob1
+        When I use the identity alice1
         Then I should have the following assets of type org.acme.mynetwork.Commodity
             | tradingSymbol | description | mainExchange | quantity | owner           |
             | 1             | One         | London       | 1          | alice@email.com |
@@ -100,3 +100,4 @@ Feature: Sample
         Then I should have the following assets of type org.acme.mynetwork.Commodity
             | tradingSymbol | description | mainExchange | quantity   | owner           |
             | 2             | Two         | Paris        | 2          | alice@email.com   |
+
