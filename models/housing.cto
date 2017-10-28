@@ -1,0 +1,135 @@
+/**
+ * US Housing network
+ */
+namespace org.bcnetwork.housing
+
+/**
+ * Property asset models information about 
+ * the property, loan details and insurance details
+ */
+asset Property identified by propId {
+    o String propId
+    o String propEIN
+    o Address propAddress
+    o String taxReturnStatus
+    o Double propValue
+    o Insurance[] insuranceInfo
+    o Loan[] loanInfo
+    --> Owner owner
+}
+
+/**
+ * Insurance asset models information about 
+ * the property insurance.  It has the property info
+ * and the insurer info
+ */
+asset Insurance identified by insuranceId {
+    o String insuranceId
+    --> Insurer insurer
+    --> Property property
+    o Double insuranceAmount
+}
+
+/**
+ * Loan asset models information about 
+ * the loan information.  It has the property info
+ * and the lender info
+ */
+asset Loan identified by loanId {
+    o String loanId
+    o LoanType loanType
+    --> Lender lender
+    --> Property property
+    o Double loanAmount
+}
+
+/**
+ * PropertyRegistry asset models all the properties registered 
+ */
+asset PropertyRegistry identified by registryId {
+    o String registryId
+    --> Property property
+}
+
+/**
+ * Enumerate the loan types 
+ */
+ enum LoanType {
+  o BUSINESS
+  o HOME
+}
+
+/**
+ * A concept for street address
+ */
+concept Address {
+  o String postbox optional
+  o String street optional
+  o String city optional
+  o String zip optional
+}
+
+/**
+ * Owner participant models the individual details 
+ */
+participant Owner identified by ssn {
+    o String ssn
+    o String firstName
+    o String lastName
+    o String email
+    o String phoneNumber
+    o String faxNumber
+    o Address ownerAddress
+}
+
+/**
+ * Lender participant models the lender details 
+ */
+participant Lender identified by lenderId {
+    o String lenderId
+    o String lenderName
+    o Address lenderAddress
+}
+
+/**
+ * Insurer participant models the insurer details 
+ */
+participant Insurer identified by insurerId {
+    o String insurerId
+    o String insurerName
+    o Address insurerAddress
+}
+
+/**
+ * RegisterProperty transaction registers 
+ * properties in the master registry 
+ */
+transaction RegisterProperty {
+    --> Property property
+}
+
+/**
+ * AddLoanToProperty transaction adds loan information to  
+ * a property
+ */
+ transaction AddLoanToProperty {
+    --> Property property
+    --> Loan loan
+}
+
+/**
+ * AddInsuranceToProperty transaction adds insurance information to  
+ * a property
+ */
+transaction AddInsuranceToProperty {
+    --> Property property
+    --> Insurance insurance
+}
+
+event PropertyRegisteredNotification {
+    --> Property property
+}
+
+event PropertyUnregisteredNotification {
+    --> Property property
+}
